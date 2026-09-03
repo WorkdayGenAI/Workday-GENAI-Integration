@@ -1,6 +1,6 @@
 # Workday Integration Hub — Complete User Guide
 
-Welcome to the **Workday Integration Hub**, your AI-powered assistant for building Workday integrations faster than ever. This guide walks you through everything from first-time setup to generating production-ready code — all from within Claude Desktop.
+Welcome to the **Workday Integration Hub**, your AI-powered assistant for building Workday integrations faster than ever. This guide walks you through everything from first-time setup to generating production-ready code — all from within Claude Code.
 
 ---
 
@@ -26,7 +26,7 @@ Welcome to the **Workday Integration Hub**, your AI-powered assistant for buildi
 
 ## 1. What Is the Workday Integration Hub?
 
-The Workday Integration Hub is a **visual dashboard that lives inside Claude Desktop**. When you open it, a beautiful slide-out panel appears on the right side of your chat. You fill out forms, upload design documents, and click **Generate** — Claude reads everything you provide, applies Workday-specific knowledge and production templates, and writes complete, deployable integration code directly in the chat window.
+The Workday Integration Hub is a **visual dashboard that lives inside Claude Code**. When you open it, a widget panel appears on the right side of your chat. You fill out forms, upload design documents, and click **Generate** — Claude reads everything you provide, applies Workday-specific knowledge and production templates, and writes complete, deployable integration code directly in the chat window.
 
 **No manual prompting required.** You don't need to know how to write prompts. The visual forms handle all of that for you.
 
@@ -49,91 +49,88 @@ The Hub gives you four dedicated AI-powered generators:
 
 | Requirement | Details |
 | :--- | :--- |
-| **Python 3.10 or higher** | Download from [python.org](https://python.org). During installation, **check the box "Add Python to PATH"**. Verify by opening Command Prompt and typing `python --version`. |
-| **Claude Desktop** | The official Claude Desktop application, installed and logged in with an active account. |
-| **Node.js 18+** *(Optional)* | Only needed if you plan to modify the visual dashboard source code. Not required for normal use. |
+| **Claude Code** | The official Claude Code application (desktop or IDE extension), installed and logged in with an active account. |
+| **WorkdayMCP.exe** | The Workday MCP server executable. Place it in a dedicated folder (e.g., `C:\Users\YourName\Claude MCP`). No additional Python or Node.js installation is required. |
 
 ---
 
 ## 4. First-Time Setup (Step by Step)
 
-### Step 1: Extract the ZIP
-Unzip the distribution folder to any convenient location on your computer. For example:
+### Step 1: Create a folder and place the .exe
+Create a folder named **"Claude MCP"** in a convenient location on your computer. For example:
 ```
-C:\Users\YourName\workday_hub
+C:\Users\YourName\Claude MCP
 ```
+Place the `WorkdayMCP.exe` file inside this folder.
 
-### Step 2: Install Python Dependencies
-Open **Command Prompt** (cmd) and navigate to the **project root folder** (the folder containing `requirements.txt`):
-```cmd
-cd C:\Users\YourName\workday_hub
-pip install -r requirements.txt
-```
+### Step 2: Double-click the .exe file
+Double-click `WorkdayMCP.exe` to launch the auto-registration process. A console window will open.
 
-> ⚠️ **Common mistake**: Make sure you run this command from the **project root folder** — NOT from inside the `ui/` or `server/` subfolder. If you see "No such file or directory", you're in the wrong folder.
+### Step 3: Wait for auto-registration to complete
+The console window registers the MCP server with Claude automatically. Wait until you see a **SUCCESS** message confirming it has been registered.
 
-This installs the following packages automatically:
-- `fastmcp` — The communication bridge between Claude Desktop and the Hub server.
-- `pandas` & `openpyxl` — For reading Excel mapping files and the Web Services database.
-- `python-docx` — For reading Word design documents (`.docx`).
-- `pypdf` — For extracting text from PDF specification files.
-- `tabulate` — For formatting tabular data.
-- `lxml` — For advanced XML processing.
-
-### Step 3: Register with Claude Desktop
-In the **same Command Prompt window** (still in the project root), run:
-```cmd
-python server\server.py
-```
-
-You will see output like:
 ```
 ============================================================
    WORKDAY INTEGRATION ASSISTANT — AUTO REGISTRATION
 ============================================================
-[*] Server Command: python
-[*] Configuration target: C:\Users\...\AppData\Roaming\Claude\claude_desktop_config.json
-
-[+] SUCCESS: Registered successfully with Claude Desktop!
-[*] Please RESTART Claude Desktop completely to apply changes.
-
-[+] Created quick-start prompt file: ...\INITIAL_PROMPT.txt
+[+] SUCCESS: Registered successfully with Claude!
+[*] Please RESTART Claude completely to apply changes.
 ============================================================
-
-Press Enter to exit...
 ```
 
-Press **Enter** to close.
+### Step 4: Press Enter
+Once the SUCCESS message appears, press **Enter** in the console window to close it.
 
-> 💡 **Alternative**: You can also run `setup_server.bat` by double-clicking it — it does Steps 2 and 3 automatically.
-
-### Step 4: Restart Claude Desktop
+### Step 5: Quit and restart Claude
 This step is **critical**:
-1. **Right-click the Claude icon** in the Windows system tray (bottom-right corner, near the clock) and click **Quit**.
-2. Relaunch Claude Desktop.
-3. Go to **Settings → Developer → MCP** and confirm that **"Workday Transformation Assistant"** shows a **green dot** next to it.
+1. **Fully quit Claude** — close it completely from the taskbar or system tray.
+2. **Relaunch Claude Code** so the new server is loaded.
+
+### Step 6: Verify the server in Settings → Developer
+Open **Settings → Developer** in Claude Code. The **Workday Transformation Assistant** should be listed under **Local MCP servers** with a **running** status.
+
+```
+Settings → Developer
+└── Local MCP servers
+    └── Workday Transformation Assistant  ●  running   ✅
+```
+
+### Step 7: Select your working folder in Claude Code
+Back in Claude Code, use **Select Folder** and choose the **"Claude MCP"** folder where you saved the `.exe`. This is the working directory where generated files will be saved.
 
 ✅ **Setup is complete.** You're ready to use the Hub.
+
+> 💡 **FYI — What's bundled inside the .exe**: The executable packages all required dependencies so you don't need to install anything manually. These include:
+> - `fastmcp` — The communication bridge between Claude and the Hub server.
+> - `pandas` & `openpyxl` — For reading Excel mapping files and the Web Services database.
+> - `python-docx` — For reading Word design documents (`.docx`).
+> - `pypdf` — For extracting text from PDF specification files.
+> - `tabulate` — For formatting tabular data.
+> - `lxml` — For advanced XML processing.
 
 ---
 
 ## 5. How to Open the Dashboard in Claude
 
-Open any chat in Claude Desktop and type one of these commands:
+Once the server is running and your folder is selected, start a task from Claude Code. Each generator has a dedicated launch command:
 
-> **"Launch the Workday dashboard"**
->
-> **"Open workday home"**
+| Module | Command to type in Claude Code |
+| :--- | :--- |
+| **Hub Home (all modules)** | `Open workday home` |
+| **Studio Integration** | `Open Studio and run listener` |
+| **XSLT Generator** | `open xslt` |
+| **BIRT Report Generator** | `Open the BIRT report designer` |
+| **Web Service SOAP Builder** | `Open the Web Service builder` |
 
-Claude will process the request and display a small button labeled **"open widget"** on the right side of its chat response.
+Claude will process the request and display a widget on the right side of its chat response.
 
-**You MUST click the "open widget" button.** This is what opens the visual dashboard panel on the right side of Claude Desktop.
+> ⚠️ **Important**: When you open Studio or any module for the first time in a session, Claude Code will show **permission pop-ups**. You must **Allow every permission pop-up that appears** for the tools to function correctly.
 
 ```
 +------------------------------------------+-------------------------------------------+
-|  Claude Desktop Chat                     |  Workday Integration Hub (Widget Panel)   |
+|  Claude Code Chat                        |  Workday Integration Hub (Widget Panel)   |
 |                                          |                                           |
-|  You: Launch the Workday dashboard       |  ┌───────────────────────────────────────┐ |
+|  You: Open workday home                  |  ┌───────────────────────────────────────┐ |
 |                                          |  │  ACCENTURE · WORKDAY PRACTICE         │ |
 |  Claude: ✓ Tool executed                 |  │                                       │ |
 |  ┌──────────────────────────┐            |  │  Build integrations faster than ever  │ |
@@ -149,12 +146,6 @@ Claude will process the request and display a small button labeled **"open widge
 |                                          |  └───────────────────────────────────────┘ |
 +------------------------------------------+-------------------------------------------+
 ```
-
-> 💡 **Shortcut**: You can also open individual modules directly by telling Claude:
-> - *"Open the XSLT generator"*
-> - *"Open Studio integration"*
-> - *"Open the BIRT report designer"*
-> - *"Open the Web Service builder"*
 
 ---
 
@@ -191,12 +182,13 @@ Generates complete, production-ready XSLT transformation stylesheets for Workday
 
 ### Step-by-Step Walkthrough
 
-1. Click the **XSLT Generation** card on the Hub dashboard.
-2. *(Optional but recommended)* Upload your design document — if you do, all other fields become optional.
-3. Select your **Category** (e.g., `Core Connector DT`).
-4. Select your **Output Format** (e.g., `CSV (comma-delimited)`).
-5. Select your **XSLT Version** (default: `XSLT 2.0 (recommended)`).
-6. Paste your **Source XML** (or upload an XML file). Example:
+1. In Claude Code, type **`open xslt`** to launch the XSLT Generator widget.
+2. Allow any permission pop-ups that appear.
+3. *(Optional but recommended)* Upload your design document — if you do, all other fields become optional.
+4. Select your **Category** (e.g., `Core Connector DT`).
+5. Select your **Output Format** (e.g., `CSV (comma-delimited)`).
+6. Select your **XSLT Version** (default: `XSLT 2.0 (recommended)`).
+7. Paste your **Source XML** (or upload an XML file). Example:
    ```xml
    <Root>
      <Employee>
@@ -205,11 +197,10 @@ Generates complete, production-ready XSLT transformation stylesheets for Workday
      </Employee>
    </Root>
    ```
-7. *(Optional)* Fill in Expected Output, Field Mappings, and Additional Instructions.
-8. Click **"Generate Transformation"**.
-9. A notification appears: **"✅ Context injected! Claude is compiling the XSLT in the chat panel."**
-10. **Look at the left side of Claude Desktop** (the chat area). Claude is now writing the complete XSLT stylesheet.
-11. Copy the generated XSLT from Claude's chat response and use it in your Workday integration.
+8. *(Optional)* Fill in Expected Output, Field Mappings, and Additional Instructions.
+9. Click **"Generate Transformation"**.
+10. The chat shows a **single pre-filled prompt line**. **Press Enter** to run it.
+11. Claude generates the complete XSLT stylesheet in the chat. Copy the completed XSLT directly from Claude's reply.
 
 ### What Claude Knows Automatically
 - Correct Workday namespace declarations (`wd:`, `is:`, `xtt:`, `etv:`) for each category.
@@ -235,20 +226,19 @@ Scaffolds a complete Workday Studio integration project from a design specificat
 
 ### Step-by-Step Walkthrough
 
-1. Click the **Studio Integration** card on the Hub dashboard (or tell Claude *"Open Studio integration"*).
-2. **Drag and drop your design document** onto the upload area (or click to browse).
+1. In Claude Code, type **`Open Studio and run listener`**.
+2. **Allow every permission pop-up** that appears — these are required for the Studio listener to function.
+3. The Studio widget opens with a listener running in the background.
+4. **Drag and drop your design document** onto the upload area (or click to browse).
    - Example quick test: Upload a simple `.txt` file containing:
      > *"SFTP inbound integration fetching worker profiles, splitting records, and sending updates to Workday using the Import_Service_Deliveries web service operation."*
-3. *(Optional)* Type **Additional Instructions** for extra rules. Example:
+5. *(Optional)* Type **Additional Instructions** for extra rules. Example:
    ```
    Position 1: SFTP, Position 2: XML Splitter, Position 3: Web Service Call.
    ```
-4. Click **"Generate Studio Integration →"**.
-5. A notification appears: **"✅ Context injected! Claude is compiling the Studio Spring Beans XML files in the chat panel."**
-6. **Look at the chat area** in Claude Desktop. Claude will:
-   - Ask you any gap questions (e.g., *"What is the SFTP hostname?"*, *"Is this inbound or outbound?"*) in a **single numbered list**.
-   - Once you answer, Claude generates the complete `.clara` assembly XML and the `.assembly-diagram.xml` layout coordinates.
-7. Copy the generated XML code from Claude's response.
+6. Click **"Generate Studio Integration →"**.
+7. The chat shows a **single pre-filled prompt line**. **Press Enter** to run it.
+8. Claude generates the complete Studio integration codebase and **saves the files** directly to the project folder — the `.clara` assembly XML and the `.assembly-diagram.xml` layout coordinates.
 
 ### What Claude Knows Automatically
 - The complete `CLAUDE.md` Studio Generation Protocol (multi-step build process with checklist verification).
@@ -275,9 +265,10 @@ Generates a complete, deployable Eclipse BIRT `.rptdesign` report layout XML. Yo
 
 ### Step-by-Step Walkthrough
 
-1. Click the **BIRT Report Generation** card on the Hub dashboard.
-2. **Upload your visual PDF layout** — this is a sample or screenshot of what the report should look like.
-3. **Provide the XML data**:
+1. In Claude Code, type **`Open the BIRT report designer`** to launch the BIRT widget.
+2. Allow any permission pop-ups that appear.
+3. **Upload your visual PDF layout** — this is a sample or screenshot of what the report should look like.
+4. **Provide the XML data**:
    - Click **"Upload File"** to drop an XML file, **OR**
    - Click **"Paste Raw XML"** and paste your sample XML directly. Example:
      ```xml
@@ -288,7 +279,7 @@ Generates a complete, deployable Eclipse BIRT `.rptdesign` report layout XML. Yo
        </Report_Entry>
      </Report_Data>
      ```
-4. **Provide the XSD schema**:
+5. **Provide the XSD schema**:
    - Upload an XSD file, **OR** paste it directly. Example:
      ```xml
      <?xml version="1.0" encoding="utf-8"?>
@@ -296,9 +287,9 @@ Generates a complete, deployable Eclipse BIRT `.rptdesign` report layout XML. Yo
        <xsd:element name="Report_Data"/>
      </xsd:schema>
      ```
-5. Click **"Generate BIRT Report"**.
-6. A notification appears: **"✅ Context injected! Claude is compiling the BIRT .rptdesign code in the chat."**
-7. **Look at the chat area.** Claude writes the complete `.rptdesign` XML layout that you can directly deploy to Workday.
+6. Click **"Generate BIRT Report"**.
+7. The chat shows a **single pre-filled prompt line**. **Press Enter** to run it.
+8. Claude writes the complete `.rptdesign` XML layout that you can directly deploy to Workday.
 
 ### What Claude Knows Automatically
 - The complete `BIRTClaude.md` protocol — detailed BIRT report design patterns, element ID sequencing rules, styling guidelines, data source binding conventions, and table/grid layout structures.
@@ -332,20 +323,21 @@ The dropdown includes operations such as:
 
 ### Step-by-Step Walkthrough
 
-1. Click the **Workday Web Service** card on the Hub dashboard.
-2. Select the **Operation** from the dropdown (e.g., `Change_Legal_Name`).
-3. Select the **WSDL Version** (e.g., `v43.0`).
-4. Type your **Field Mapping** requirements. Example:
+1. In Claude Code, type **`Open the Web Service builder`** to launch the SOAP Builder widget.
+2. Allow any permission pop-ups that appear.
+3. Select the **Operation** from the dropdown (e.g., `Change_Legal_Name`).
+4. Select the **WSDL Version** (e.g., `v43.0`).
+5. Type your **Field Mapping** requirements. Example:
    ```
    Worker Reference -> Employee_ID from source file
    Legal Name -> First_Name + " " + Last_Name
    Country -> "US"
    Effective Date -> Current date
    ```
-5. *(Optional)* Upload a design document with detailed specifications.
-6. Click **"Generate Web Service Request"**.
-7. A notification appears: **"✅ SOAP request template prepared!"**
-8. **Look at the chat area.** Claude generates the complete SOAP request envelope XML with all field mappings applied and correct Workday namespace conventions.
+6. *(Optional)* Upload a design document with detailed specifications.
+7. Click **"Generate Web Service Request"**.
+8. The chat shows a **single pre-filled prompt line**. **Press Enter** to run it.
+9. Claude returns the fully configured SOAP request envelope XML with all field mappings applied and correct Workday namespace conventions.
 
 ### What Claude Knows Automatically
 - The base SOAP XML template for each operation (loaded from the built-in `WSS_entries.xlsx` database).
@@ -367,7 +359,7 @@ YOU (in the Widget Panel)                    CLAUDE (in the Chat Area)
         │                                    
         ▼                                    
 4. Widget sends your inputs                  
-   to the background server                  
+   to the MCP server                         
         │                                    
         ▼                                    
 5. Server reads your documents,              
@@ -376,17 +368,18 @@ YOU (in the Widget Panel)                    CLAUDE (in the Chat Area)
    and packages enriched context             
         │                                    
         ▼                                    
-6. Enriched context is delivered             6. Claude receives the enriched
-   to Claude via the bridge ──────────────►     context automatically
+6. A single pre-filled prompt line           6. Claude receives the enriched
+   appears in chat ──────────────────────►      context automatically
                                              
-                                             7. Claude generates production-
+7. You press Enter on that line              7. Claude generates production-
                                                 ready code in the chat
                                              
-                                             8. You copy the code from chat
-                                                and deploy it to Workday
+                                             8. Files are saved to the project
+                                                folder (Studio) or you copy
+                                                from chat (XSLT / SOAP)
 ```
 
-**Key point**: You don't need to type any prompts manually. The visual form + the server's knowledge engine handle everything. Claude receives a rich, structured specification — not just your raw text — so the generated code is production-quality from the start.
+**Key point**: You don't need to type any prompts manually. The visual form + the MCP server's knowledge engine handle everything. Claude receives a rich, structured specification — not just your raw text — so the generated code is production-quality from the start.
 
 ---
 
@@ -394,19 +387,19 @@ YOU (in the Widget Panel)                    CLAUDE (in the Chat Area)
 
 When Claude generates code, it appears in the **chat window** for you to copy.
 
-Additionally, Claude can **automatically save files to disk**. Generated files are saved to:
+For **Studio Integrations**, Claude also **automatically saves files to disk** in the selected working folder. Generated files are saved to:
 ```
-<project_folder>/Generated documents/<integration_name>/
+<Claude MCP folder>/Generated documents/<integration_name>/
 ```
 
 For example:
 ```
-workday_hub/Generated documents/INT502_Willis_Towers_Watson/
+Claude MCP/Generated documents/INT502_Willis_Towers_Watson/
 ├── INT502.clara
 └── INT502_assembly-diagram.xml
 ```
 
-You can ask Claude in chat: *"Save this to disk"* and it will use the built-in file saver to write the code directly to your `Generated documents/` folder.
+You can also ask Claude in chat: *"Save this to disk"* and it will use the built-in file saver to write the code directly to your `Generated documents/` folder.
 
 ---
 
@@ -446,88 +439,70 @@ Detailed Workday integration instructions located in `claude_folder/Instructions
 
 ## 14. Sharing the Tool With Your Team
 
-### For End Users (Non-Developers)
-Run the release packager to create a clean ZIP that only contains what users need:
-```cmd
-python package_release.py --build-ui
-```
-Output: `workday_hub_release_YYYYMMDD.zip`
+Sharing the Hub with teammates is straightforward — no build steps or packaging scripts are needed.
 
-Recipients only need to:
-1. Unzip the archive.
-2. Run `setup_server.bat` (or manually: `pip install -r requirements.txt` then `python server\server.py`).
-3. Restart Claude Desktop.
+### For All Users (End Users and Developers)
+Simply share the `WorkdayMCP.exe` file. Recipients follow the same one-time setup:
+1. Create a **"Claude MCP"** folder and place `WorkdayMCP.exe` inside it.
+2. Double-click `WorkdayMCP.exe` and wait for the SUCCESS message.
+3. Press Enter to close the console.
+4. Fully quit and restart Claude.
+5. Verify the server shows **running** in **Settings → Developer → Local MCP servers**.
+6. In Claude Code, use **Select Folder** to choose the "Claude MCP" folder.
 
-### For Developers (Source Code)
-Run the developer packager to share full source code (minus `node_modules` and `.venv`):
-```cmd
-python package_developer.py
-```
-Output: `workday_hub_dev_YYYYMMDD.zip`
-
-Recipients will need to:
-1. Unzip the archive.
-2. Run `pip install -r requirements.txt` in the project root.
-3. Run `cd ui && npm install && npm run build` to compile the React dashboard.
-4. Run `python server\server.py` to register.
+No Python installation, no `pip install`, and no `npm build` steps are required for end users.
 
 ---
 
 ## 15. Troubleshooting & FAQ
 
-### "pip install" says "No such file or directory" for requirements.txt
-**Cause**: You're in the wrong directory.  
-**Fix**: Navigate to the **project root folder** (the one containing `requirements.txt`, `server/`, and `ui/`):
-```cmd
-cd C:\Users\YourName\workday_hub
-pip install -r requirements.txt
-```
-
-### Claude Desktop shows a red dot next to "Workday Transformation Assistant"
-**Cause**: Server registration failed or Python can't find dependencies.  
+### The Workday Transformation Assistant does not appear in Settings → Developer
+**Cause**: The .exe has not been run yet, or Claude was not fully restarted after registration.  
 **Fix**:
-1. Open Command Prompt in the project root.
-2. Run `python server\server.py` and check for error messages.
-3. If you see import errors, re-run `pip install -r requirements.txt`.
-4. If paths are wrong in the config, open `%APPDATA%\Claude\claude_desktop_config.json` and fix the absolute paths.
-5. Restart Claude Desktop completely (quit from system tray first).
+1. Double-click `WorkdayMCP.exe` again and confirm you see the SUCCESS message.
+2. Press Enter to close the console.
+3. Fully quit Claude (from the taskbar or system tray) and reopen it.
+4. Check **Settings → Developer → Local MCP servers** again.
 
-### I clicked "Generate" but nothing happened in the chat
-**Cause**: The context transfer may not have completed, or Claude's listener wasn't active.  
-**Fix**: In Claude Desktop's chat area, type one of these:
+### The server shows a status other than "running" in Settings → Developer
+**Cause**: The MCP server process stopped or failed to start.  
+**Fix**:
+1. Double-click `WorkdayMCP.exe` again to re-register.
+2. Quit and restart Claude completely.
+3. Verify the status changes to **running**.
+
+### I clicked "Generate" but the chat showed no pre-filled prompt line
+**Cause**: The context transfer may not have completed, or the listener was not active.  
+**Fix**: In Claude Code's chat area, type one of these:
 - *"Listen for UI session"*
 - *"Generate"*
 - *"Run the listen_for_ui_session tool"*
 
 Claude will pick up your submission and generate the code.
 
-### The widget panel opens but shows a blank page
-**Cause**: The React dashboard hasn't been compiled yet (`ui/dist/` folder is missing).  
-**Fix**:
-```cmd
-cd ui
-npm install
-npm run build
-cd ..
-```
-Then restart Claude Desktop.
+### Permission pop-ups keep appearing and blocking the workflow
+**Cause**: Claude Code requires explicit permission for MCP tool calls.  
+**Fix**: Click **Allow** on every permission pop-up. If you want to avoid repeated prompts, you can grant persistent permissions in Claude Code's settings for the Workday Transformation Assistant tools.
 
-### Port 8000 is already in use
-**Cause**: Another application is using port 8000.  
-**Fix**: Close the other application, or change the port number in `server\server.py` (search for `start_ui_http_server(8000)` and change `8000` to another port like `8080`).
+### The widget panel opens but shows a blank page
+**Cause**: The server may not be fully running yet.  
+**Fix**:
+1. Re-run `WorkdayMCP.exe` and confirm the SUCCESS message.
+2. Restart Claude Code fully.
+3. Re-open the widget by typing the launch command again.
 
 ### How do I update to a newer version?
-1. Download the new ZIP.
-2. Extract it to a fresh folder (or overwrite the old one).
-3. Re-run `pip install -r requirements.txt`.
-4. Re-run `python server\server.py` to re-register.
-5. Restart Claude Desktop.
+1. Download the new `WorkdayMCP.exe`.
+2. Replace the old `.exe` in your "Claude MCP" folder with the new one.
+3. Double-click the new `.exe` and wait for the SUCCESS message.
+4. Press Enter, then fully quit and restart Claude.
 
-### Can I use this in a web browser instead of Claude Desktop?
-Yes! When the server is running, you can also open `http://localhost:8000` directly in Chrome or any browser. The visual dashboard works the same way. However, to get Claude's AI generation, you'll need to tell Claude to *"listen for UI session"* or *"connect to the listener"* in the Claude Desktop chat while you submit from the browser.
+### After running the .exe, MCP files are not showing up in Claude Settings?
+This is typically a path issue. Take the path generated during the execution of the `.exe` file (e.g., `C:\Users\abc\AppData\Roaming\Claude`) and refer to the `claude_desktop_config.json` file. Copy the first node of the JSON (`mcpServers`) into the config file found at **Settings → Developer → Connector → Edit Config** (which will be at a path similar to `C:\Users\abc\AppData\Local\Packages\Claude_xyz\LocalCache\Roaming\Claude`).
 
-### After installing Executable file, MCP Files are not shoeing up in Claude Desktop Settings?
-This is ideally a path issue - Please take the path generated during the execution of .exe file ("C:\Users\abc\AppData\Roaming\Claude") and refer to the json file "claude_desktop_config.json" and copy its First node of Json ( mcpServers ) into the file path from Settings > Developer > Connector > Edit Config ( It will be similar to  " C:\Users\abc\AppData\Local\Packages\Claude_xyz\LocalCache\Roaming\Claude" )
+### Can I use this in a web browser instead of Claude Code?
+The generators are designed to work within Claude Code using the MCP server integration. The widget panels are embedded in Claude Code's interface and depend on the MCP tools for context injection and file saving.
+
 ---
 
 *Workday Integration Hub — Accenture · Workday Practice*
