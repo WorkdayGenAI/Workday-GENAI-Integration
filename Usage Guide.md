@@ -65,13 +65,25 @@ Open Studio and run listener
 
 Allow every permission pop-up that appears (including the **"Listen for studio ui"** permission).
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_1.png)
+
 #### Step 9: Provide the design document and generate
 
 Upload the design document, add any additional instructions, then click **Generate Studio Integration**.
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_2.png)
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_3.png)
+
+
 #### Step 10: Press Enter on the single-line prompt
 
 After clicking Generate, the chat shows a single pre-filled line. Press **Enter** to run it — Claude generates the Studio integration codebase and saves the files.
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_4.png)
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_5.png)
+
 
 > **Result:** Generated assembly, diagram, and XSLT files saved to the project.
 
@@ -85,6 +97,8 @@ Send the following message in Claude Code to launch the XSLT Generator:
 open xslt
 ```
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_6.png)
+
 Fill in all the parameters:
 
 | Parameter | Description |
@@ -95,9 +109,17 @@ Fill in all the parameters:
 
 Then provide the **source XML** and, optionally, an **expected output sample**.
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_7.png)
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_8.png)
+
+
 Click **Generate Transformation**, then press **Enter** on the single-line prompt in chat.
 
 > Copy the completed XSLT directly from Claude's reply.
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_9.png)
+
 
 ---
 
@@ -109,7 +131,14 @@ Open the **Workday Web Service SOAP Request Builder** from Claude Code, then fil
 - **WSDL version**
 - **Field mappings** or a **sample payload specification**
 
+ ![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_10.png) 
+
 Click **Generate Web Service Request**, then press **Enter** on the single-line prompt in chat.
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_11.png)
+
 > **Result:** Claude returns the fully configured SOAP request payload with all field mappings applied.
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/Workday_Integration_12.png)
+
 
