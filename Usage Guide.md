@@ -15,6 +15,7 @@ Create a folder named **"Claude MCP"** and place the `WorkdayMCP.exe` file insid
 ### Step 3: Wait for auto-registration to complete
 
 ![Downloading the application package from GitHub by clicking "View raw"](Docs/WD_INT1.png)
+
 A console window opens and registers the server with Claude Desktop. You should see a **SUCCESS** message confirming it is registered.
 
 ### Step 4: Press Enter
