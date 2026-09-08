@@ -30,10 +30,16 @@ Fully quit Claude Desktop and reopen it so the new server is loaded.
 
 In Claude Code, open **Settings → Developer**. The Workday Transformation Assistant should be listed under **Local MCP servers** with a **running** status.
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/WD_INT2.png)
+
+![Downloading the application package from GitHub by clicking "View raw"](Docs/WD_INT3.png)
+
+
 ### Step 7: Select your working folder in Claude Code
 
 In Claude Code, use **Select Folder** and choose the **"Claude MCP"** folder where you saved the `.exe`.
 
+![Downloading the application package from GitHub by clicking "View raw"](Docs/WD_INT4.png)
 ---
 
 ## Part 2 — Using the Assistant
